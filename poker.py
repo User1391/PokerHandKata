@@ -107,6 +107,44 @@ def hand_type(poker_hand):
     else:
         return "High Card"
 
+def hand_type_rank(poker_hand):
+    if is_hand_straight_flush(poker_hand):
+        return 8 
+    elif is_hand_four_of_a_kind(poker_hand):
+        return 7 
+    elif is_hand_full_house(poker_hand):
+        return 6 
+    elif is_hand_flush(poker_hand):
+        return 5 
+    elif is_hand_straight(poker_hand):
+        return 4
+    elif is_hand_three_of_a_kind(poker_hand):
+        return 3
+    elif is_hand_two_pair(poker_hand):
+        return 2
+    elif is_hand_pair(poker_hand):
+        return 1
+    else:
+        return 0
+
+def hand_stronger(hand, opponent_hand):
+    ht_rank = hand_type_rank(hand)
+    oppo_ht_rank = hand_type_rank(opponent_hand)
+
+    if ht_rank > oppo_ht_rank:
+        return 1
+    elif ht_rank < oppo_ht_rank:
+        return -1 
+    elif hand == opponent_hand:
+        return 0
+    # actually need to find the high card
+    # because the flush parity has already been checked, we can just compare faces (ranks)
+    else:
+        return 1 if hand > opponent_hand else -1
+        
+        
+        
+
 class Card:
     def __init__(self, card_str):
         self.face = face_string_to_int(card_str[0])
@@ -125,10 +163,18 @@ class PokerHand:
     def __init__(self, list_of_cards):
         self.cards = sorted(list_of_cards, key=lambda x: x.face)
     def __eq__(self, other):
-        for my_card, other_card in enumerate(zip(self.cards, other.cards)):
-            if my_card != other_card:
+        for my_card, other_card in zip(self.cards, other.cards):
+            if my_card.face != other_card.face:
                 return False
         return True
+    def __gt__(self, other):
+        # I am aware there may be a better way to do this than fully reversing, but it is 
+        # just not a meaningful compute time difference
+        for my_card, other_card in zip(reversed(self.cards), reversed(other.cards)):
+            if my_card.face > other_card.face:
+                return True 
+            elif my_card.face < other_card.face:
+                return False
     def __str__(self):
         out_str = "PokerHand["
         for card in self.cards:
@@ -138,6 +184,7 @@ class PokerHand:
         return out_str + "]"
     def __len__(self):
         return len(self.cards)
+    
             
 
 

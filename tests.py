@@ -79,6 +79,32 @@ for i in range(10):
     print(hand)
     print(hand_type(hand))
 
+# Testing Hand Comparisons (opponent hand stronger)
+my_hand = "2H 3D 5S 9C KD"
+oppo_hand = "2C 3H 4S 8C AH"
+my_hand = string_of_cards_to_list_of_cards(my_hand)
+oppo_hand = string_of_cards_to_list_of_cards(oppo_hand)
+my_hand = PokerHand(my_hand)
+oppo_hand = PokerHand(oppo_hand)
+assert hand_stronger(my_hand, oppo_hand) == -1
+
+# Testing Hand Comparisons (my hand stronger)
+my_hand = "2H 4S 4C 2D 4H"
+oppo_hand = "2S 8S AS QS 3S"
+my_hand = string_of_cards_to_list_of_cards(my_hand)
+oppo_hand = string_of_cards_to_list_of_cards(oppo_hand)
+my_hand = PokerHand(my_hand)
+oppo_hand = PokerHand(oppo_hand)
+assert hand_stronger(my_hand, oppo_hand) == 1
+
+# Testing Hand Comparisons (tie)
+my_hand = "2H 3D 5S 9C KD"
+oppo_hand = "2D 3H 5C 9S KH"
+my_hand = string_of_cards_to_list_of_cards(my_hand)
+oppo_hand = string_of_cards_to_list_of_cards(oppo_hand)
+my_hand = PokerHand(my_hand)
+oppo_hand = PokerHand(oppo_hand)
+assert hand_stronger(my_hand, oppo_hand) == 0
 
 
 print("All tests passed.")
