@@ -1,3 +1,8 @@
+import itertools
+import random
+from typing import List
+
+
 class Card:
     def __init__(self, face, suit):
         self.face = face
@@ -8,7 +13,7 @@ class Card:
 
 
 class PokerHand:
-    def __init__(self, list_of_cards):
+    def __init__(self, list_of_cards: List[Card]):
         self.cards = sorted(list_of_cards, key=lambda x: x.face)
 
     def __eq__(self, other):
@@ -28,3 +33,27 @@ class PokerHand:
 
     def __len__(self):
         return len(self.cards)
+
+
+class Deck:
+    def __init__(self):
+        self.deck = [
+            Card(face, suit)
+            for face, suit in list(
+                itertools.product(range(2, 15), ["H", "D", "S", "C"])
+            )
+        ]
+
+    def shuffle(self) -> None:
+        random.shuffle(self.deck)
+
+    def reset_deck(self) -> None:
+        self.deck = [
+            Card(face, suit)
+            for face, suit in list(
+                itertools.product(range(2, 15), ["H", "D", "S", "C"])
+            )
+        ]
+
+    def deal_hand(self) -> PokerHand:
+        return PokerHand(self.deck[:5])
