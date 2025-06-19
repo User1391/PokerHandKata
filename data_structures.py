@@ -35,6 +35,15 @@ class PokerHand:
         return len(self.cards)
 
 
+class Player:
+    def __init__(self, player_name: str):
+        self.name: str = player_name
+        self.hand: PokerHand
+
+    def deal_hand(self, hand: PokerHand):
+        self.hand = hand
+
+
 class Deck:
     def __init__(self):
         self.deck = [

@@ -51,3 +51,16 @@ def hand_to_string(hand: ds.PokerHand):
 
 def card_to_string(card: ds.Card):
     return "Card(" + str(card.face) + card.suit + ")"
+
+
+def deck_to_string(deck: ds.Deck):
+    out_str = "Deck["
+    for card in deck.deck:
+        out_str += card_to_string(card)
+        if card != deck.deck[-1]:
+            out_str += " "
+    return out_str + "]"
+
+
+def player_to_string(player: ds.Player):
+    return player.name + ": " + hand_to_string(player.hand)
