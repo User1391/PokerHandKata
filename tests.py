@@ -110,5 +110,21 @@ my_hand = PokerHand(my_hand)
 oppo_hand = PokerHand(oppo_hand)
 assert hand_stronger(my_hand, oppo_hand) == 0
 
+# Testing Player ds
+player = Player("player_1")
+player.deal_hand(my_hand)
+assert player.hand == my_hand
+assert player.name == "player_1"
+
+# Testing Deck ds
+deck = Deck()
+deck2 = Deck()
+deck.shuffle()
+assert deck.deck != deck2.deck
+deck.reset_deck()
+assert deck.deck == deck2.deck
+assert type(deck.deal_hand()) == type(
+    PokerHand(string_of_cards_to_list_of_cards("2H 3H 4H 5H 6H"))
+)
 
 print("All tests passed.")
